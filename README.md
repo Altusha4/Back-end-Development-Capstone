@@ -29,7 +29,7 @@ The site has Home, Songs (lyrics modal), Photos, Login, Signup, Concerts and Dja
 
 Build with `docker build -t djangoserver .`. Set a fresh `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=0`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS`, `SONGS_URL` and `PICTURES_URL`. Use `/data` as a persistent volume for SQLite in this single-replica lab. The entrypoint applies committed migrations, and never creates an admin with a hard-coded password. Run `createsuperuser` interactively after deployment.
 
-`deployment.yml` is a template: replace the image/host/service placeholders and create the `django-config` secret before applying. The code and local tests are complete; cloud deployment evidence is tracked separately and is not implied by this README.
+`deployment.yml` is a template: replace the image/host/service placeholders and create the `django-config` secret before applying. Cloud deployment was verified on 22 October 2026: Django runs in Kubernetes, Pictures in Code Engine, and Songs with MongoDB in OpenShift. Home, Songs and Photos were checked in Chrome. The lab uses `emptyDir`, so replacing the Django pod resets SQLite data; use a persistent volume for durable data. The OpenShift route was unreachable from this lab, so Songs is connected through the Skills Network port-forward proxy. Both forwards require active lab sessions. Upstream requests allow a 5-second connection timeout and 25-second read timeout for cold starts. Set `GUNICORN_CMD_ARGS=--no-control-socket` in this lab environment.
 
 ## Container
 
