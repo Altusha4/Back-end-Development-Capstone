@@ -33,7 +33,7 @@ class LoginForm(AuthenticationForm):
         fields = ["username", "password"]
 
 
-class SignUpForm(AuthenticationForm):
+class SignUpForm(forms.Form):
     username = forms.CharField(
         max_length=100,
         required=True,
@@ -62,3 +62,15 @@ class SignUpForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ["username", "password"]
+
+    def clean_username(self):
+        name = self.cleaned_data["username"]
+        if User.objects.filter(username=name).exists():
+            raise forms.ValidationError("This username is already taken.")
+        return name
+
+    def clean_password(self):
+        from django.contrib.auth.password_validation import validate_password
+        password = self.cleaned_data["password"]
+        validate_password(password)
+        return password

@@ -49,9 +49,7 @@
             </li>
             {% if request.user.is_authenticated %}
             <li>
-              <a class="nav-link scrollto o" href="{% url 'concerts' %}"
-                >Concerts</a
-              >
+              <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="btn btn-link nav-link" type="submit">Logout</button></form>
             </li>
             {% endif%}
           </ul>

@@ -131,3 +131,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.venv/
+__pycache__/
+*.sqlite3
+.env
+django_concert/static/
