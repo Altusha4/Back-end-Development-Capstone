@@ -39,7 +39,7 @@ def logout_view(request):
 
 def songs(request):
     try:
-        response = requests.get(settings.SONGS_URL.rstrip("/") + "/song", timeout=5)
+        response = requests.get(settings.SONGS_URL.rstrip("/") + "/song", timeout=(5, 25))
         response.raise_for_status()
         songs = response.json()["songs"]
     except (requests.RequestException, ValueError, KeyError):
@@ -49,7 +49,7 @@ def songs(request):
 
 def photos(request):
     try:
-        response = requests.get(settings.PICTURES_URL.rstrip("/") + "/picture", timeout=5)
+        response = requests.get(settings.PICTURES_URL.rstrip("/") + "/picture", timeout=(5, 25))
         response.raise_for_status()
         photos = response.json()
     except (requests.RequestException, ValueError):
